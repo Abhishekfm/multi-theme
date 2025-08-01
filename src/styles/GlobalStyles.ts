@@ -25,6 +25,14 @@ export const GlobalStyle = createGlobalStyle<{ $theme: any }>`
     overflow-x: hidden;
     transition: ${props => props.$theme.animation.transition} ${props => props.$theme.animation.duration} ${props => props.$theme.animation.easing};
 
+    /* Prevent scrolling on body for sidebar layout */
+    ${props => props.$theme.layout.type === 'sidebar' && css`
+      @media (min-width: 768px) {
+        overflow: hidden;
+        height: 100vh;
+      }
+    `}
+
     /* Theme 3: Green gradient background */
     ${props => props.$theme.id === 'theme3' && css`
       background: ${props.$theme.colors.background};
@@ -48,6 +56,15 @@ export const GlobalStyle = createGlobalStyle<{ $theme: any }>`
     display: flex;
     flex-direction: column;
     width: 100%;
+
+    /* For sidebar layout, make root a flex container */
+    ${props => props.$theme.layout.type === 'sidebar' && css`
+      @media (min-width: 768px) {
+        flex-direction: row;
+        height: 100vh;
+        overflow: hidden;
+      }
+    `}
   }
 
   /* Custom scrollbar */
@@ -103,6 +120,8 @@ export const AppContainer = styled.div<{ $theme: any }>`
   ${props => props.$theme.layout.type === 'sidebar' && css`
     @media (min-width: 768px) {
       flex-direction: row;
+      height: 100vh;
+      overflow: hidden;
     }
   `}
 `;
@@ -125,7 +144,9 @@ export const HeaderContainer = styled.header<{ $theme: any }>`
 
   ${props => props.$theme.layout.type === 'sidebar' && css`
     @media (min-width: 768px) {
-      position: relative;
+      position: fixed;
+      top: 0;
+      left: 0;
       width: ${props.$theme.layout.sidebarWidth};
       height: 100vh;
       flex-direction: column;
@@ -133,6 +154,8 @@ export const HeaderContainer = styled.header<{ $theme: any }>`
       padding: ${props.$theme.spacing.xl} ${props.$theme.spacing.lg};
       border-right: 1px solid ${props.$theme.colors.border};
       border-bottom: none;
+      overflow-y: auto;
+      right: auto;
     }
   `}
 
@@ -153,6 +176,8 @@ export const MainContent = styled.main<{ $theme: any }>`
     @media (min-width: 768px) {
       margin-left: ${props.$theme.layout.sidebarWidth};
       padding-top: 0;
+      height: 100vh;
+      overflow-y: auto;
     }
   `}
 `;
@@ -166,8 +191,13 @@ export const ScrollableContent = styled.div<{ $theme: any }>`
   ${props => props.$theme.layout.type === 'sidebar' && css`
     padding: ${props.$theme.spacing.xxl};
     
-    @media (max-width: 1024px) {
+    @media (max-width: 767px) {
       padding: ${props.$theme.spacing.xl};
+    }
+
+    @media (min-width: 768px) {
+      height: auto;
+      overflow-y: visible;
     }
   `}
 
@@ -189,6 +219,7 @@ export const ContentContainer = styled.div<{ $theme: any }>`
 
   ${props => props.$theme.layout.type === 'sidebar' && css`
     max-width: none;
+    padding: 0;
   `}
 `;
 
