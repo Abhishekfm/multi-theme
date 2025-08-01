@@ -23,43 +23,7 @@ export const GlobalStyle = createGlobalStyle<{ $theme: any }>`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
-    position: relative;
-
-    /* Theme 1: Glassmorphism background */
-    ${props => props.$theme.id === 'theme1' && css`
-      background: ${props.$theme.colors.background};
-      position: relative;
-      
-      &::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: ${props.$theme.colors.background};
-        z-index: -2;
-      }
-      
-      &::after {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-image: 
-          radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-          radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-          radial-gradient(circle at 75% 25%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
-        z-index: -1;
-      }
-    `}
-
-    /* Theme 2: Dark elegant background */
-    ${props => props.$theme.id === 'theme2' && css`
-      background: ${props.$theme.colors.background};
-    `}
+    transition: ${props => props.$theme.animation.transition} ${props => props.$theme.animation.duration} ${props => props.$theme.animation.easing};
 
     /* Theme 3: Green gradient background */
     ${props => props.$theme.id === 'theme3' && css`
@@ -81,8 +45,9 @@ export const GlobalStyle = createGlobalStyle<{ $theme: any }>`
 
   #root {
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    position: relative;
   }
 
   /* Custom scrollbar */
@@ -91,7 +56,7 @@ export const GlobalStyle = createGlobalStyle<{ $theme: any }>`
   }
 
   ::-webkit-scrollbar-track {
-    background: transparent;
+    background: ${props => props.$theme.colors.surface};
   }
 
   ::-webkit-scrollbar-thumb {
@@ -101,7 +66,7 @@ export const GlobalStyle = createGlobalStyle<{ $theme: any }>`
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: ${props => props.$theme.colors.primary};
+    background: ${props => props.$theme.colors.secondary};
   }
 
   /* Focus styles */
@@ -120,89 +85,55 @@ export const GlobalStyle = createGlobalStyle<{ $theme: any }>`
     color: ${props => props.$theme.colors.text};
   }
 
-  /* Loading animation keyframes */
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-  }
-
-  @keyframes shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
   }
 `;
 
-// Main app container with proper layout structure
+// Layout wrapper that adapts to theme
 export const AppContainer = styled.div<{ $theme: any }>`
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
+  background: ${props => props.$theme.colors.background};
+  transition: ${props => props.$theme.animation.transition} ${props => props.$theme.animation.duration} ${props => props.$theme.animation.easing};
   position: relative;
 
   ${props => props.$theme.layout.type === 'sidebar' && css`
-    flex-direction: row;
-    
-    @media (max-width: 1024px) {
-      flex-direction: column;
+    @media (min-width: 768px) {
+      flex-direction: row;
     }
-  `}
-
-  ${props => props.$theme.layout.type === 'minimalist' && css`
-    flex-direction: column;
-  `}
-
-  ${props => props.$theme.layout.type === 'grid' && css`
-    flex-direction: column;
   `}
 `;
 
-// Header that adapts to each theme with glassmorphism
+// Header that adapts to each theme
 export const HeaderContainer = styled.header<{ $theme: any }>`
-  position: sticky;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   height: ${props => props.$theme.layout.headerHeight};
   background: ${props => props.$theme.colors.surface};
-  backdrop-filter: blur(20px);
   border-bottom: 1px solid ${props => props.$theme.colors.border};
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 ${props => props.$theme.spacing.lg};
   z-index: 1000;
-  transition: ${props => props.$theme.animation.transition} ${props => props.$theme.animation.duration};
+  transition: ${props => props.$theme.animation.transition} ${props => props.$theme.animation.duration} ${props => props.$theme.animation.easing};
 
   ${props => props.$theme.layout.type === 'sidebar' && css`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: ${props.$theme.layout.sidebarWidth};
-    height: 100vh;
-    border-right: 1px solid ${props.$theme.colors.border};
-    border-bottom: none;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    
-    @media (max-width: 1024px) {
-      position: sticky;
-      width: 100%;
-      height: ${props.$theme.layout.headerHeight};
-      flex-direction: row;
-      overflow-y: visible;
-      border-right: none;
-      border-bottom: 1px solid ${props.$theme.colors.border};
+    @media (min-width: 768px) {
+      position: relative;
+      width: ${props.$theme.layout.sidebarWidth};
+      height: 100vh;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: ${props.$theme.spacing.xl} ${props.$theme.spacing.lg};
+      border-right: 1px solid ${props.$theme.colors.border};
+      border-bottom: none;
     }
-  `}
-
-  /* Theme-specific header styling */
-  ${props => props.$theme.id === 'theme1' && css`
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(30px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  `}
-
-  ${props => props.$theme.id === 'theme2' && css`
-    background: ${props.$theme.colors.surface};
-    border-bottom: 1px solid ${props.$theme.colors.border};
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   `}
 
   ${props => props.$theme.id === 'theme3' && css`
@@ -213,17 +144,15 @@ export const HeaderContainer = styled.header<{ $theme: any }>`
   `}
 `;
 
-// Main content area that scrolls properly
+// Main content wrapper
 export const MainContent = styled.main<{ $theme: any }>`
   flex: 1;
-  min-height: 100vh;
+  padding-top: ${props => props.$theme.layout.headerHeight};
   
   ${props => props.$theme.layout.type === 'sidebar' && css`
-    margin-left: ${props.$theme.layout.sidebarWidth};
-    overflow-y: auto;
-    
-    @media (max-width: 1024px) {
-      margin-left: 0;
+    @media (min-width: 768px) {
+      margin-left: ${props.$theme.layout.sidebarWidth};
+      padding-top: 0;
     }
   `}
 `;
@@ -232,7 +161,7 @@ export const MainContent = styled.main<{ $theme: any }>`
 export const ScrollableContent = styled.div<{ $theme: any }>`
   height: 100%;
   overflow-y: auto;
-  padding: ${props => props.$theme.spacing.xxl};
+  padding: ${props => props.$theme.spacing.xl};
 
   ${props => props.$theme.layout.type === 'sidebar' && css`
     padding: ${props.$theme.spacing.xxl};
@@ -245,25 +174,25 @@ export const ScrollableContent = styled.div<{ $theme: any }>`
   ${props => props.$theme.layout.type === 'grid' && css`
     padding: ${props.$theme.spacing.xxl};
   `}
-
-  /* Theme-specific content styling */
-  ${props => props.$theme.id === 'theme1' && css`
-    position: relative;
-  `}
 `;
 
 // Container for content with max-width
 export const ContentContainer = styled.div<{ $theme: any }>`
   max-width: ${props => props.$theme.layout.maxWidth};
   margin: 0 auto;
+  padding: ${props => props.$theme.layout.containerPadding};
   width: 100%;
+  
+  ${props => props.$theme.layout.type === 'grid' && css`
+    padding: ${props.$theme.spacing.xl};
+  `}
 
   ${props => props.$theme.layout.type === 'sidebar' && css`
     max-width: none;
   `}
 `;
 
-// Enhanced loading states with glassmorphism
+// Enhanced loading states
 export const LoadingOverlay = styled.div<{ $isVisible: boolean; $theme: any }>`
   position: fixed;
   top: 0;
@@ -280,13 +209,8 @@ export const LoadingOverlay = styled.div<{ $isVisible: boolean; $theme: any }>`
   visibility: ${props => props.$isVisible ? 'visible' : 'hidden'};
   transition: all 0.3s ease;
 
-  ${props => props.$theme.id === 'theme1' && css`
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(20px);
-  `}
-
   ${props => props.$theme.id === 'theme2' && css`
-    background: rgba(15, 15, 15, 0.9);
+    background: rgba(15, 23, 42, 0.9);
     backdrop-filter: blur(12px);
   `}
 
@@ -299,22 +223,10 @@ export const LoadingOverlay = styled.div<{ $isVisible: boolean; $theme: any }>`
 export const LoadingSpinner = styled.div<{ $theme: any }>`
   width: 48px;
   height: 48px;
-  border: 3px solid transparent;
+  border: 3px solid ${props => props.$theme.colors.border};
   border-top: 3px solid ${props => props.$theme.colors.primary};
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  position: relative;
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: -3px;
-    left: -3px;
-    right: -3px;
-    bottom: -3px;
-    border: 3px solid ${props => props.$theme.colors.primary}30;
-    border-radius: 50%;
-  }
 
   @keyframes spin {
     0% { transform: rotate(0deg); }
@@ -322,7 +234,7 @@ export const LoadingSpinner = styled.div<{ $theme: any }>`
   }
 `;
 
-// Modern glassmorphism card inspired by the designs
+// Modern glassmorphism card (only for Theme 3)
 export const GlassCard = styled.div<{ $theme: any }>`
   background: ${props => props.$theme.colors.card};
   backdrop-filter: blur(20px);
@@ -330,35 +242,12 @@ export const GlassCard = styled.div<{ $theme: any }>`
   border-radius: ${props => props.$theme.layout.borderRadius};
   padding: ${props => props.$theme.spacing.xl};
   transition: ${props => props.$theme.animation.transition} ${props => props.$theme.animation.duration};
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
-
-  ${props => props.$theme.id === 'theme1' && css`
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(30px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.25);
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
-    }
-  `}
-
-  ${props => props.$theme.id === 'theme2' && css`
-    background: ${props.$theme.colors.card};
-    border: 1px solid ${props.$theme.colors.border};
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-
-    &:hover {
-      border-color: ${props.$theme.colors.primary};
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
-    }
-  `}
 
   ${props => props.$theme.id === 'theme3' && css`
     background: rgba(255, 255, 255, 0.9);
@@ -370,37 +259,15 @@ export const GlassCard = styled.div<{ $theme: any }>`
       background: rgba(255, 255, 255, 1);
       border-color: ${props.$theme.colors.primary};
       box-shadow: 0 16px 48px rgba(16, 185, 129, 0.2);
+      transform: translateY(-4px);
     }
   `}
 `;
 
-// Animated gradient background for vibrant themes
+// Gradient background for vibrant theme
 export const GradientBackground = styled.div<{ $theme: any }>`
-  ${props => (props.$theme.id === 'theme1' || props.$theme.id === 'theme3') && css`
+  ${props => props.$theme.id === 'theme3' && css`
     min-height: 100vh;
     position: relative;
-  `}
-`;
-
-// Beautiful section containers
-export const Section = styled.section<{ $theme: any }>`
-  margin-bottom: ${props => props.$theme.spacing.xxl};
-  
-  ${props => props.$theme.id === 'theme1' && css`
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: ${props.$theme.layout.borderRadius};
-    padding: ${props.$theme.spacing.xxl};
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  `}
-
-  ${props => props.$theme.id === 'theme3' && css`
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(16, 185, 129, 0.2);
-    border-radius: ${props.$theme.layout.borderRadius};
-    padding: ${props.$theme.spacing.xxl};
-    box-shadow: 0 8px 32px rgba(16, 185, 129, 0.1);
   `}
 `;
