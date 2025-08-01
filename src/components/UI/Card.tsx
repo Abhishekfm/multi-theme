@@ -13,50 +13,55 @@ const CardContainer = styled.div<{ $theme: any }>`
   background: ${props => props.$theme.colors.card};
   border-radius: ${props => props.$theme.layout.borderRadius};
   overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   position: relative;
   height: 100%;
   display: flex;
   flex-direction: column;
-
-  /* Base card styling */
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   border: 1px solid ${props => props.$theme.colors.border};
 
+  /* Base modern card styling */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
   }
 
-  /* Theme-specific styling */
-  ${props => props.$theme.layout.type === 'minimalist' && css`
-    border: 1px solid ${props.$theme.colors.border};
+  /* Theme 1: Glassmorphism styling inspired by Nitec */
+  ${props => props.$theme.id === 'theme1' && css`
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     
     &:hover {
-      border-color: ${props.$theme.colors.primary};
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
     }
   `}
 
-  ${props => props.$theme.layout.type === 'sidebar' && css`
-    background: ${props.$theme.colors.surface};
-    border: 2px solid ${props.$theme.colors.border};
-    border-radius: ${props.$theme.layout.borderRadius};
+  /* Theme 2: Dark elegant styling inspired by Velvety */
+  ${props => props.$theme.id === 'theme2' && css`
+    background: ${props.$theme.colors.card};
+    border: 1px solid ${props.$theme.colors.border};
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 
     &:hover {
       border-color: ${props.$theme.colors.primary};
-      transform: translateY(-6px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+      transform: translateY(-10px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
     }
   `}
 
-  ${props => props.$theme.layout.type === 'grid' && css`
-    background: ${props.$theme.colors.card};
-    border: none;
-    border-radius: ${props.$theme.spacing.lg};
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  /* Theme 3: Modern green styling inspired by GetIllustrations */
+  ${props => props.$theme.id === 'theme3' && css`
+    background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(20px);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    box-shadow: 0 8px 32px rgba(16, 185, 129, 0.1);
     position: relative;
     overflow: hidden;
 
@@ -71,45 +76,67 @@ const CardContainer = styled.div<{ $theme: any }>`
     }
 
     &:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+      background: rgba(255, 255, 255, 1);
+      transform: translateY(-12px) scale(1.03);
+      box-shadow: 0 25px 50px rgba(16, 185, 129, 0.2);
+      border-color: ${props.$theme.colors.primary};
     }
   `}
 `;
 
 const ImageContainer = styled.div<{ $theme: any }>`
   width: 100%;
-  height: 240px;
+  height: 280px;
   overflow: hidden;
   position: relative;
   background: ${props => props.$theme.colors.surface};
 
-  ${props => props.$theme.layout.type === 'grid' && css`
-    height: 280px;
+  ${props => props.$theme.id === 'theme1' && css`
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
   `}
 
-  ${props => props.$theme.layout.type === 'sidebar' && css`
-    height: 220px;
+  ${props => props.$theme.id === 'theme2' && css`
+    background: ${props.$theme.colors.surface};
+  `}
+
+  ${props => props.$theme.id === 'theme3' && css`
+    background: rgba(255, 255, 255, 0.5);
   `}
 `;
 
 const ProductImage = styled.img<{ $theme: any }>`
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  object-fit: contain;
+  padding: ${props => props.$theme.spacing.xl};
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 
   ${CardContainer}:hover & {
-    transform: scale(1.08);
+    transform: scale(1.1);
   }
 
-  ${props => props.$theme.layout.type === 'grid' && css`
-    object-fit: contain;
-    padding: ${props.$theme.spacing.lg};
-    background: white;
+  ${props => props.$theme.id === 'theme1' && css`
+    padding: ${props.$theme.spacing.xl};
     
     ${CardContainer}:hover & {
-      transform: scale(1.05);
+      transform: scale(1.08);
+    }
+  `}
+
+  ${props => props.$theme.id === 'theme2' && css`
+    padding: ${props.$theme.spacing.lg};
+    
+    ${CardContainer}:hover & {
+      transform: scale(1.06);
+    }
+  `}
+
+  ${props => props.$theme.id === 'theme3' && css`
+    padding: ${props.$theme.spacing.xl};
+    
+    ${CardContainer}:hover & {
+      transform: scale(1.12) rotate(2deg);
     }
   `}
 `;
@@ -120,16 +147,53 @@ const ImageOverlay = styled.div<{ $theme: any }>`
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.1));
+  background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.05));
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.4s ease;
 
   ${CardContainer}:hover & {
     opacity: 1;
   }
 
-  ${props => props.$theme.layout.type === 'grid' && css`
-    background: linear-gradient(135deg, ${props.$theme.colors.primary}10, ${props.$theme.colors.secondary}10);
+  ${props => props.$theme.id === 'theme1' && css`
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+  `}
+
+  ${props => props.$theme.id === 'theme2' && css`
+    background: linear-gradient(to bottom, transparent 40%, rgba(196, 181, 160, 0.1));
+  `}
+
+  ${props => props.$theme.id === 'theme3' && css`
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(245, 158, 11, 0.1));
+  `}
+`;
+
+const PopularBadge = styled.div<{ $theme: any }>`
+  position: absolute;
+  top: ${props => props.$theme.spacing.lg};
+  right: ${props => props.$theme.spacing.lg};
+  background: ${props => props.$theme.colors.accent};
+  color: white;
+  padding: ${props => props.$theme.spacing.xs} ${props => props.$theme.spacing.sm};
+  border-radius: 20px;
+  font-size: ${props => props.$theme.typography.fontSize.small};
+  font-weight: ${props => props.$theme.typography.fontWeight.bold};
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 2;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+  ${props => props.$theme.id === 'theme1' && css`
+    background: rgba(6, 182, 212, 0.9);
+    backdrop-filter: blur(10px);
+  `}
+
+  ${props => props.$theme.id === 'theme2' && css`
+    background: ${props.$theme.colors.accent};
+  `}
+
+  ${props => props.$theme.id === 'theme3' && css`
+    background: linear-gradient(135deg, ${props.$theme.colors.accent}, #F97316);
   `}
 `;
 
@@ -140,7 +204,15 @@ const CardContent = styled.div<{ $theme: any }>`
   flex-direction: column;
   gap: ${props => props.$theme.spacing.md};
 
-  ${props => props.$theme.layout.type === 'grid' && css`
+  ${props => props.$theme.id === 'theme1' && css`
+    padding: ${props.$theme.spacing.xxl} ${props.$theme.spacing.xl};
+  `}
+
+  ${props => props.$theme.id === 'theme2' && css`
+    padding: ${props.$theme.spacing.xl};
+  `}
+
+  ${props => props.$theme.id === 'theme3' && css`
     padding: ${props.$theme.spacing.xxl} ${props.$theme.spacing.xl};
   `}
 `;
@@ -149,13 +221,31 @@ const ProductCategory = styled.div<{ $theme: any }>`
   font-size: ${props => props.$theme.typography.fontSize.small};
   color: ${props => props.$theme.colors.textSecondary};
   text-transform: uppercase;
-  font-weight: ${props => props.$theme.typography.fontWeight.medium};
-  letter-spacing: 0.5px;
-  margin-bottom: ${props => props.$theme.spacing.xs};
+  font-weight: ${props => props.$theme.typography.fontWeight.bold};
+  letter-spacing: 1px;
+  margin-bottom: ${props => props.$theme.spacing.sm};
 
-  ${props => props.$theme.layout.type === 'grid' && css`
+  ${props => props.$theme.id === 'theme1' && css`
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(59, 130, 246, 0.2);
+    padding: ${props.$theme.spacing.xs} ${props.$theme.spacing.sm};
+    border-radius: 12px;
+    display: inline-block;
+    backdrop-filter: blur(10px);
+  `}
+
+  ${props => props.$theme.id === 'theme2' && css`
     color: ${props.$theme.colors.primary};
-    font-weight: ${props.$theme.typography.fontWeight.bold};
+    border-left: 3px solid ${props.$theme.colors.primary};
+    padding-left: ${props.$theme.spacing.sm};
+  `}
+
+  ${props => props.$theme.id === 'theme3' && css`
+    color: ${props.$theme.colors.primary};
+    background: rgba(16, 185, 129, 0.1);
+    padding: ${props.$theme.spacing.xs} ${props.$theme.spacing.sm};
+    border-radius: 8px;
+    display: inline-block;
   `}
 `;
 
@@ -170,17 +260,28 @@ const ProductTitle = styled.h3<{ $theme: any }>`
   overflow: hidden;
   margin-bottom: ${props => props.$theme.spacing.sm};
 
-  ${props => props.$theme.layout.type === 'grid' && css`
+  ${props => props.$theme.id === 'theme1' && css`
+    color: white;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     font-size: ${props.$theme.typography.fontSize.xlarge};
+  `}
+
+  ${props => props.$theme.id === 'theme2' && css`
+    color: ${props.$theme.colors.text};
+    font-size: ${props.$theme.typography.fontSize.xlarge};
+  `}
+
+  ${props => props.$theme.id === 'theme3' && css`
     background: linear-gradient(135deg, ${props.$theme.colors.primary}, ${props.$theme.colors.secondary});
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    font-size: ${props.$theme.typography.fontSize.xlarge};
   `}
 `;
 
 const ProductDescription = styled.p<{ $theme: any }>`
-  font-size: ${props => props.$theme.typography.fontSize.small};
+  font-size: ${props => props.$theme.typography.fontSize.medium};
   color: ${props => props.$theme.colors.textSecondary};
   line-height: ${props => props.$theme.typography.lineHeight.normal};
   display: -webkit-box;
@@ -189,8 +290,16 @@ const ProductDescription = styled.p<{ $theme: any }>`
   overflow: hidden;
   flex: 1;
 
-  ${props => props.$theme.layout.type === 'grid' && css`
-    font-size: ${props.$theme.typography.fontSize.medium};
+  ${props => props.$theme.id === 'theme1' && css`
+    color: rgba(255, 255, 255, 0.9);
+  `}
+
+  ${props => props.$theme.id === 'theme2' && css`
+    color: ${props.$theme.colors.textSecondary};
+  `}
+
+  ${props => props.$theme.id === 'theme3' && css`
+    color: ${props.$theme.colors.textSecondary};
   `}
 `;
 
@@ -198,24 +307,31 @@ const ProductFooter = styled.div<{ $theme: any }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: ${props => props.$theme.spacing.md};
+  gap: ${props => props.$theme.spacing.lg};
   margin-top: auto;
   padding-top: ${props => props.$theme.spacing.lg};
   border-top: 1px solid ${props => props.$theme.colors.border};
 
-  ${props => props.$theme.layout.type === 'grid' && css`
+  ${props => props.$theme.id === 'theme1' && css`
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  `}
+
+  ${props => props.$theme.id === 'theme2' && css`
+    border-top: 1px solid ${props.$theme.colors.border};
+  `}
+
+  ${props => props.$theme.id === 'theme3' && css`
+    border-top: 1px solid rgba(16, 185, 129, 0.2);
     flex-direction: column;
     gap: ${props.$theme.spacing.lg};
     align-items: stretch;
-    border-top: none;
-    padding-top: ${props.$theme.spacing.xl};
   `}
 `;
 
 const PriceSection = styled.div<{ $theme: any }>`
   display: flex;
   flex-direction: column;
-  gap: ${props => props.$theme.spacing.xs};
+  gap: ${props => props.$theme.spacing.sm};
 `;
 
 const Price = styled.div<{ $theme: any }>`
@@ -223,7 +339,18 @@ const Price = styled.div<{ $theme: any }>`
   font-weight: ${props => props.$theme.typography.fontWeight.bold};
   color: ${props => props.$theme.colors.primary};
 
-  ${props => props.$theme.layout.type === 'grid' && css`
+  ${props => props.$theme.id === 'theme1' && css`
+    color: white;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    font-size: 2rem;
+  `}
+
+  ${props => props.$theme.id === 'theme2' && css`
+    color: ${props.$theme.colors.primary};
+    font-size: 2rem;
+  `}
+
+  ${props => props.$theme.id === 'theme3' && css`
     font-size: 2.5rem;
     text-align: center;
     background: linear-gradient(135deg, ${props.$theme.colors.primary}, ${props.$theme.colors.accent});
@@ -237,12 +364,17 @@ const RatingContainer = styled.div<{ $theme: any }>`
   display: flex;
   align-items: center;
   gap: ${props => props.$theme.spacing.sm};
+
+  ${props => props.$theme.id === 'theme3' && css`
+    justify-content: center;
+  `}
 `;
 
 const Stars = styled.div<{ $theme: any; $rating: number }>`
   display: flex;
   align-items: center;
   gap: 2px;
+  position: relative;
   
   &::before {
     content: '★★★★★';
@@ -254,19 +386,35 @@ const Stars = styled.div<{ $theme: any; $rating: number }>`
     content: '★★★★★';
     color: ${props => props.$theme.colors.accent};
     position: absolute;
+    top: 0;
+    left: 0;
     overflow: hidden;
     width: ${props => (props.$rating / 5) * 100}%;
   }
+
+  ${props => props.$theme.id === 'theme1' && css`
+    &::before {
+      color: rgba(255, 255, 255, 0.3);
+    }
+    
+    &::after {
+      color: #FFC107;
+    }
+  `}
 `;
 
 const RatingText = styled.span<{ $theme: any }>`
   font-size: ${props => props.$theme.typography.fontSize.small};
   color: ${props => props.$theme.colors.textSecondary};
   font-weight: ${props => props.$theme.typography.fontWeight.medium};
+
+  ${props => props.$theme.id === 'theme1' && css`
+    color: rgba(255, 255, 255, 0.8);
+  `}
 `;
 
 const StyledButton = styled(Button)<{ $theme: any }>`
-  ${props => props.$theme.layout.type === 'grid' && css`
+  ${props => props.$theme.id === 'theme3' && css`
     width: 100%;
   `}
 `;
@@ -284,9 +432,13 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
     console.log('Add to cart:', product.title);
   };
 
+  // Determine if product is popular (rating > 4.0)
+  const isPopular = product.rating.rate > 4.0;
+
   return (
     <CardContainer $theme={theme} onClick={handleClick}>
       <ImageContainer $theme={theme}>
+        {isPopular && <PopularBadge $theme={theme}>Popular</PopularBadge>}
         <ProductImage
           $theme={theme}
           src={product.image}
@@ -323,7 +475,7 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
           <StyledButton 
             $theme={theme}
             variant="primary" 
-            size={theme.layout.type === 'grid' ? 'large' : 'medium'}
+            size="large"
             onClick={handleAddToCart}
             icon="🛒"
           >
