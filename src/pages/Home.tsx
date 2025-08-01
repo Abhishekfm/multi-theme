@@ -67,7 +67,7 @@ const HeroSubtitle = styled.p<{ $theme: any }>`
   margin-right: auto;
 
   ${props => props.$theme.layout.type === 'grid' && css`
-    font-size: ${props => props.$theme.typography.fontSize.xlarge};
+    font-size: ${props.$theme.typography.fontSize.xlarge};
     margin-bottom: ${props.$theme.spacing.xxl};
   `}
 `;

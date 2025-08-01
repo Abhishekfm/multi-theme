@@ -87,7 +87,7 @@ const Paragraph = styled.p<{ $theme: any }>`
   `}
 
   ${props => props.$theme.layout.type === 'grid' && css`
-    font-size: ${props => props.$theme.typography.fontSize.large};
+    font-size: ${props.$theme.typography.fontSize.large};
     line-height: ${props.$theme.typography.lineHeight.loose};
   `}
 `;

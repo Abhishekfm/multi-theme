@@ -40,7 +40,7 @@ export const useFakeStore = (limit?: number): UseFakeStoreResult => {
 
   useEffect(() => {
     fetchProducts();
-  }, [limit]);
+  }, [limit]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const refetch = () => {
     fetchProducts();

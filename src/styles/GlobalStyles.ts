@@ -1,5 +1,4 @@
 import styled, { createGlobalStyle, css } from 'styled-components';
-import { useTheme } from '../context/ThemeContext';
 
 export const GlobalStyle = createGlobalStyle<{ $theme: any }>`
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');

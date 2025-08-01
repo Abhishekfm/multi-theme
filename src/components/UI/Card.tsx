@@ -239,8 +239,7 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
           <Button 
             variant="primary" 
             size={theme.layout.type === 'grid' ? 'large' : 'small'}
-            onClick={(e) => {
-              e.stopPropagation();
+            onClick={() => {
               console.log('Add to cart:', product.title);
             }}
           >
