@@ -2,6 +2,8 @@
 
 A modern React TypeScript application demonstrating dynamic theming with three distinct themes, each providing a completely different user experience through layout, typography, colors, and interactions.
 
+Live Demo: [Multi-Theme App Live](https://multi-theme-eight.vercel.app/)
+
 ## 🎨 Features
 
 ### Three Unique Themes
