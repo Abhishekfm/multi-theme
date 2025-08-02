@@ -5,11 +5,13 @@ A modern React TypeScript application demonstrating dynamic theming with three d
 ## 🎨 Features
 
 ### Three Unique Themes
+
 1. **Minimalist Theme** - Clean, light design with simple sans-serif fonts and minimal layout
 2. **Dark Professional Theme** - Dark mode with sidebar layout, bold serif fonts, and professional styling
 3. **Playful Theme** - Colorful card-based grid layout with playful Google Font (Pacifico) and vibrant interactions
 
 ### Core Functionality
+
 - **Dynamic Theme Switching** - Instant theme changes with smooth animations
 - **Persistent Preferences** - Theme selection saved to localStorage
 - **Responsive Design** - Optimized for desktop, tablet, and mobile devices
@@ -22,23 +24,27 @@ A modern React TypeScript application demonstrating dynamic theming with three d
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Node.js (v14 or higher)
 - npm or yarn
 
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone <repository-url>
    cd multi-theme
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Start the development server**
+
    ```bash
    npm start
    ```
@@ -49,25 +55,26 @@ A modern React TypeScript application demonstrating dynamic theming with three d
 ### Available Scripts
 
 - `npm start` - Runs the app in development mode
-- `npm test` - Launches the test runner
 - `npm run build` - Builds the app for production
-- `npm run eject` - Ejects from Create React App (⚠️ irreversible)
 
 ## 🏗️ Technology Stack
 
 ### Frontend
+
 - **React 18** - Modern React with hooks and concurrent features
 - **TypeScript** - Type-safe development
 - **Styled Components** - CSS-in-JS with dynamic theming
 - **React Router DOM** - Client-side routing
 
 ### Styling & Theming
+
 - **Dynamic Theme System** - Context-based theme management
 - **Responsive Design** - Mobile-first approach
 - **Google Fonts** - Inter, Playfair Display, Pacifico
 - **CSS-in-JS** - Styled components with theme integration
 
 ### Security & Performance
+
 - **Input Sanitization** - XSS prevention
 - **Rate Limiting** - Form submission protection
 - **CSP Headers** - Content Security Policy
@@ -77,6 +84,7 @@ A modern React TypeScript application demonstrating dynamic theming with three d
 ## 📱 Theme Details
 
 ### Theme 1: Minimalist
+
 - **Layout**: Traditional top header with centered content
 - **Colors**: Light background, blue accents, subtle grays
 - **Typography**: Inter font family, clean and readable
@@ -84,6 +92,7 @@ A modern React TypeScript application demonstrating dynamic theming with three d
 - **Interactions**: Subtle hover effects and smooth transitions
 
 ### Theme 2: Dark Professional
+
 - **Layout**: Sidebar navigation on desktop, stacked on mobile
 - **Colors**: Dark backgrounds, amber accents, high contrast
 - **Typography**: Playfair Display serif font, elegant and professional
@@ -91,6 +100,7 @@ A modern React TypeScript application demonstrating dynamic theming with three d
 - **Interactions**: Bold hover states and dramatic animations
 
 ### Theme 3: Playful
+
 - **Layout**: Card-based grid system with colorful gradients
 - **Colors**: Vibrant gradients, multiple accent colors
 - **Typography**: Pacifico cursive font, fun and friendly
@@ -128,22 +138,26 @@ src/
 ## 🛡️ Security Features
 
 ### Input Validation & Sanitization
+
 - XSS prevention through input sanitization
 - Email format validation
 - Length and content validation
 - HTML tag removal
 
 ### Rate Limiting
+
 - Form submission rate limiting
 - Configurable attempt limits
 - Time-window based restrictions
 
 ### Content Security Policy
+
 - Strict CSP headers
 - Whitelisted external resources
 - XSS and injection protection
 
 ### Error Handling
+
 - React Error Boundaries
 - Graceful degradation
 - User-friendly error messages
@@ -161,16 +175,19 @@ The application integrates with the [Fake Store API](https://fakestoreapi.com/) 
 ## 🎯 Usage
 
 ### Theme Switching
+
 1. Use the dropdown in the header to switch between themes
 2. Changes are applied instantly with smooth transitions
 3. Your selection is automatically saved and persists across sessions
 
 ### Navigation
+
 - **Home**: Browse products with the current theme styling
 - **About**: Learn about the application and its features
 - **Contact**: Submit inquiries through the contact form
 
 ### Responsive Behavior
+
 - **Mobile**: Hamburger menu, stacked layouts, touch-friendly interactions
 - **Tablet**: Optimized grid layouts and spacing
 - **Desktop**: Full sidebar (Theme 2), multi-column grids, hover effects
@@ -180,10 +197,12 @@ The application integrates with the [Fake Store API](https://fakestoreapi.com/) 
 To fully experience the theme differences:
 
 1. **Start with Theme 1 (Minimalist)**
+
    - Notice the clean, minimal design
    - Observe the subtle animations and professional feel
 
 2. **Switch to Theme 2 (Dark Professional)**
+
    - Experience the dramatic dark mode transformation
    - Navigate using the sidebar (on desktop)
    - Notice the serif typography and bold interactions
@@ -210,11 +229,13 @@ To fully experience the theme differences:
 ## 🚀 Deployment
 
 ### Production Build
+
 ```bash
 npm run build
 ```
 
 ### Environment Considerations
+
 - Set appropriate CSP headers for your domain
 - Configure HTTPS for security features
 - Monitor API rate limits and usage
